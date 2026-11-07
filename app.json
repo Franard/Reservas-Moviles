@@ -1,0 +1,97 @@
+{
+  "expo": {
+    "name": "Reservas Deportivas Villaguay",
+    "slug": "reservas-deportivas-villaguay",
+    "scheme": "reservasdeportivas",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "ar.edu.uner.reservasdeportivas",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Permite escanear el código QR de la reserva en la puerta de la cancha y fotografiar el estado del espacio.",
+        "NSPhotoLibraryUsageDescription": "Permite seleccionar fotos del estado de las canchas deportivas.",
+        "NSLocationWhenInUseUsageDescription": "Muestra los complejos deportivos cercanos en el mapa y calcula cómo llegar.",
+        "NSFaceIDUsageDescription": "Permite al encargado validar su identidad rápidamente para escanear ingresos."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B3A5D"
+      },
+      "package": "ar.edu.uner.reservasdeportivas",
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "USE_BIOMETRIC",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#0B3A5D",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0F172A"
+          }
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permite escanear el código QR de la reserva en la puerta de la cancha.",
+          "barcodeScannerEnabled": true,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permite seleccionar fotos para registrar el estado de una cancha.",
+          "cameraPermission": "Permite fotografiar el estado actual de una cancha deportiva."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Muestra los complejos deportivos cercanos en el mapa y cómo llegar."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#0B3A5D"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Permite validar tu identidad con Face ID para reingresar a la aplicación."
+        }
+      ],
+      "expo-secure-store",
+      "expo-sqlite",
+      "expo-video",
+      "@react-native-vector-icons/ionicons",
+      "expo-image"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

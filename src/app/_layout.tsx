@@ -4,6 +4,7 @@ import { Platform, LogBox } from 'react-native';
 LogBox.ignoreLogs([
   '[expo-notifications]',
   'Cannot find native module',
+  'Cannot connect to Expo CLI',
 ]);
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';

@@ -38,8 +38,8 @@ Proyecto correspondiente al **Trabajo Final Integrador** de la cátedra de Progr
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-cd TU_REPOSITORIO
+git clone https://github.com/Franard/Reservas-Moviles.git
+cd Reservas-Moviles
 ```
 
 ### 2. Instalar dependencias
@@ -56,3 +56,4 @@ npx expo start
 - **En celular físico:** Escanear el código QR que aparece en la terminal usando la aplicación **Expo Go** (Android / iOS) conectando el teléfono a la misma red Wi-Fi.
 - **En navegador web:** Presionar la tecla `w` en la consola.
 - **En emulador Android:** Presionar la tecla `a` con el emulador abierto.
+

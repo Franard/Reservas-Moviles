@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  '[expo-notifications]',
+  'Cannot find native module',
+]);
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SQLiteProvider } from 'expo-sqlite';

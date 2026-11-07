@@ -20,8 +20,9 @@ try {
       });
     }
   }
-} catch (error) {
-  console.warn('[Notificaciones] Módulo nativo no disponible en este runtime:', error);
+} catch {
+  // En Expo Go de Android no están disponibles los módulos nativos de push remotos
+  Notifications = null;
 }
 
 const CANAL_ID = 'deportes-villaguay-turnos';

@@ -13,6 +13,7 @@ import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { EstadoCarga } from '@/componentes/comun/EstadoCarga';
 import { EstadoError } from '@/componentes/comun/EstadoError';
 import { ThemedText } from '@/componentes/comun/ThemedText';
+import { MiniMapaEspacio } from '@/componentes/espacios/MiniMapaEspacio';
 import { ReproductorVideoEspacio } from '@/componentes/espacios/ReproductorVideoEspacio';
 import {
   useAlternarFavorito,
@@ -223,6 +224,13 @@ export default function DetalleEspacioScreen() {
           {espacio.reglas}
         </ThemedText>
       </View>
+
+      {/* Mini Mapa Interactivo de Ubicación */}
+      <MiniMapaEspacio
+        coordenadas={espacio.coordenadas}
+        nombreEspacio={espacio.nombre}
+        complejo={espacio.complejo}
+      />
     </ScrollView>
   );
 }

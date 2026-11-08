@@ -1,12 +1,9 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
-import { router, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import { useAuth } from '@/hooks/useAuth';
+import { BotonPerfilHeader } from '@/componentes/auth/BotonPerfilHeader';
 
 export default function JugadorLayout() {
-  const { usuario } = useAuth();
-
   return (
     <Tabs
       screenOptions={{
@@ -15,16 +12,7 @@ export default function JugadorLayout() {
         headerTitleStyle: { fontWeight: '700' },
         tabBarActiveTintColor: '#0B3A5D',
         tabBarInactiveTintColor: '#78909C',
-        headerRight: () => (
-          <Pressable
-            onPress={() => router.push('/(auth)/login')}
-            style={{ marginRight: 14, paddingHorizontal: 10, paddingVertical: 5 }}
-          >
-            <Text style={{ color: '#FFFFFF', fontWeight: '600', fontSize: 13 }}>
-              {usuario ? usuario.nombre.split(' ')[0] : 'Ingresar'}
-            </Text>
-          </Pressable>
-        ),
+        headerRight: () => <BotonPerfilHeader modo="jugador" />,
       }}
     >
       <Tabs.Screen

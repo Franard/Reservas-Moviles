@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
+import { BotonPerfilHeader } from '@/componentes/auth/BotonPerfilHeader';
 
 export default function EncargadoLayout() {
   return (
@@ -10,6 +11,7 @@ export default function EncargadoLayout() {
         headerTintColor: '#FFFFFF',
         headerTitleStyle: { fontWeight: '700' },
         tabBarActiveTintColor: '#0B3A5D',
+        headerRight: () => <BotonPerfilHeader modo="panel" />,
       }}
     >
       <Tabs.Screen

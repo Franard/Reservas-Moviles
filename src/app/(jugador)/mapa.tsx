@@ -254,22 +254,30 @@ function VistaMapaNativa({
   ubicacionUsuario: { latitud: number; longitud: number } | null;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const MapView = require('react-native-maps').default;
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Marker = require('react-native-maps').Marker;
+  const Maps = require('react-native-maps');
+  const MapView = Maps.default || Maps;
+  const Marker = Maps.Marker;
+  const UrlTile = Maps.UrlTile;
 
   return (
     <View style={estilos.contenedorMapa}>
       <MapView
         style={estilos.mapa}
+        mapType="none"
         region={{
           latitude: seleccionado.latitud,
           longitude: seleccionado.longitud,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+          latitudeDelta: 0.028,
+          longitudeDelta: 0.028,
         }}
         showsUserLocation={Boolean(ubicacionUsuario)}
       >
+        <UrlTile
+          urlTemplate="https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
+          maximumZ={19}
+          flipY={false}
+          tileSize={256}
+        />
         {complejos.map((comp) => (
           <Marker
             key={comp.id}

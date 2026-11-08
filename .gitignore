@@ -39,13 +39,3 @@ yarn-error.*
 # generated native folders
 /ios
 /android
-
-# Repositorio temporal del companero
-mi-app/
-
-# Carpeta de entrega limpia
-reservas-villaguay/
-
-# API de profes y chats de referencia
-temp_api_profe/
-Chat de WhatsApp*.txt

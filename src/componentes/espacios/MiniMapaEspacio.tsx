@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { ThemedText } from '@/componentes/comun/ThemedText';
+import { MapaInteractivoLeaflet } from '@/componentes/mapa/MapaInteractivoLeaflet';
 import { useConectividad } from '@/hooks/useConectividad';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -104,44 +105,22 @@ function VistaMiniMapaNativo({
   nombreEspacio: string;
   complejo: string;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Maps = require('react-native-maps');
-  const MapView = Maps.default || Maps;
-  const Marker = Maps.Marker;
-  const UrlTile = Maps.UrlTile;
+  const itemCancha = {
+    id: 'cancha',
+    nombre: nombreEspacio,
+    direccion: complejo,
+    latitud: coordenadas.latitud,
+    longitud: coordenadas.longitud,
+  };
 
   return (
     <View style={estilos.mapaContenedor}>
-      <MapView
-        style={estilos.mapa}
-        mapType="none"
-        region={{
-          latitude: coordenadas.latitud,
-          longitude: coordenadas.longitud,
-          latitudeDelta: 0.012,
-          longitudeDelta: 0.012,
-        }}
-        scrollEnabled={false}
-        zoomEnabled={false}
-        rotateEnabled={false}
-        pitchEnabled={false}
-      >
-        <UrlTile
-          urlTemplate="https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
-          maximumZ={19}
-          flipY={false}
-          tileSize={256}
-        />
-        <Marker
-          coordinate={{
-            latitude: coordenadas.latitud,
-            longitude: coordenadas.longitud,
-          }}
-          title={nombreEspacio}
-          description={complejo}
-          pinColor="#0B3A5D"
-        />
-      </MapView>
+      <MapaInteractivoLeaflet
+        complejos={[itemCancha]}
+        seleccionado={itemCancha}
+        alSeleccionar={() => {}}
+        altura={170}
+      />
     </View>
   );
 }

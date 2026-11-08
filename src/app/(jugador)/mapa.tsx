@@ -12,6 +12,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { ThemedText } from '@/componentes/comun/ThemedText';
 import { ThemedView } from '@/componentes/comun/ThemedView';
+import { MapaInteractivoLeaflet } from '@/componentes/mapa/MapaInteractivoLeaflet';
 import { useTheme } from '@/hooks/useTheme';
 
 interface ComplejoMunicipalInfo {
@@ -246,49 +247,20 @@ function VistaMapaNativa({
   complejos,
   seleccionado,
   alSeleccionar,
-  ubicacionUsuario,
 }: {
   complejos: ComplejoMunicipalInfo[];
   seleccionado: ComplejoMunicipalInfo;
   alSeleccionar: (c: ComplejoMunicipalInfo) => void;
   ubicacionUsuario: { latitud: number; longitud: number } | null;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Maps = require('react-native-maps');
-  const MapView = Maps.default || Maps;
-  const Marker = Maps.Marker;
-  const UrlTile = Maps.UrlTile;
-
   return (
     <View style={estilos.contenedorMapa}>
-      <MapView
-        style={estilos.mapa}
-        mapType="none"
-        region={{
-          latitude: seleccionado.latitud,
-          longitude: seleccionado.longitud,
-          latitudeDelta: 0.028,
-          longitudeDelta: 0.028,
-        }}
-        showsUserLocation={Boolean(ubicacionUsuario)}
-      >
-        <UrlTile
-          urlTemplate="https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
-          maximumZ={19}
-          flipY={false}
-          tileSize={256}
-        />
-        {complejos.map((comp) => (
-          <Marker
-            key={comp.id}
-            coordinate={{ latitude: comp.latitud, longitude: comp.longitud }}
-            title={comp.nombre}
-            description={comp.direccion}
-            onPress={() => alSeleccionar(comp)}
-            pinColor={seleccionado.id === comp.id ? '#0B3A5D' : '#0288D1'}
-          />
-        ))}
-      </MapView>
+      <MapaInteractivoLeaflet
+        complejos={complejos}
+        seleccionado={seleccionado}
+        alSeleccionar={alSeleccionar}
+        altura={240}
+      />
     </View>
   );
 }

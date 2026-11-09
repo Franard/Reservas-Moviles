@@ -233,13 +233,11 @@ export const MOCK_ESPACIOS: Espacio[] = [
   },
 ];
 
-// Fechas relativas calculadas para que todos los casos feos caigan siempre dentro de los 7 días visibles
 const FECHA_ANTEAYER = obtenerFechaConOffset(-2);
 const FECHA_AYER = obtenerFechaConOffset(-1);
 const FECHA_HOY = obtenerFechaConOffset(0);
 const FECHA_MARTES_EN_VENTANA = obtenerFechaDiaSemanaEnVentana(2);
 
-// Evitamos que el día bloqueado completo por lluvia pise el martes en Cancha 2, así ambos casos son observables a la vez
 const FECHA_LLUVIA_COMPLETA =
   obtenerFechaConOffset(1) === FECHA_MARTES_EN_VENTANA
     ? obtenerFechaConOffset(3)
@@ -517,7 +515,7 @@ export const MOCK_USUARIOS: Usuario[] = [
   },
 ];
 
-// Credenciales demo para facilitar pruebas y defensa oral
+// Credenciales demo 
 export const CREDENCIALES_MOCK: Record<string, { password: string; usuarioId: string }> = {
   'emiliano@mail.com': { password: '123456', usuarioId: 'usr-207' },
   'jugador@villaguay.gob.ar': { password: '123456', usuarioId: 'usr-207' },

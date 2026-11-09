@@ -12,7 +12,7 @@ import { ErrorServicioAPI, simularRedAsync } from './apiCliente';
 
 const USUARIO_KV_KEY = 'vgy_user_session_profile';
 
-// Copia mutable en memoria para reflejar altas y cambios de favoritos/contadores en modo mock
+// Copia en memoria para reflejar altas y cambios de favoritos/contadores en modo mock
 const usuariosMemoria: Usuario[] = MOCK_USUARIOS.map((u) => ({
   ...u,
   espaciosFavoritos: [...u.espaciosFavoritos],

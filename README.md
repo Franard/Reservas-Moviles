@@ -57,23 +57,6 @@ EXPO_PUBLIC_API_URL=http://<IP_DE_TU_PC>:3000
 
 ---
 
-## 📋 Auditoría de Requisitos Mínimos (TFI - FCAD UNER)
-
-| # | Requisito de la Cátedra | Implementación en el Proyecto |
-|---|---|---|
-| **1** | **Pantallas y navegación** | Navegación completa por roles con **Expo Router** (`src/app/`). |
-| **2** | **Autenticación y seguridad** | Tokens en `expo-secure-store`, sesión persistente y biometría con `expo-local-authentication`. |
-| **3** | **Consumo de API y estados** | Capa de servicios desacoplada con estados de carga, vacío y error en pantalla. |
-| **4** | **Cámara y sistema de archivos** | `expo-camera` para QR, `expo-image-picker` y persistencia con `expo-file-system` (`File`, `Paths`). |
-| **5** | **Ubicación y mapas** | `expo-location` con cálculo de distancia Haversine y visor interactivo de mapas. |
-| **6** | **Notificaciones locales** | `expo-notifications` con recordatorios automáticos 2 hs antes del turno y avisos de suspensión. |
-| **7** | **Persistencia y conectividad** | `expo-sqlite` para datos offline, `kv-store` para preferencias y `expo-network` para estado de red. |
-| **8** | **Sensores o háptica** | `expo-haptics` en el escáner QR de portería con respuesta táctil de éxito y error. |
-| **9** | **Multimedia** | `expo-video` con reproductor nativo y controles a la vista en la ficha de cancha. |
-| **10** | **Identidad de la aplicación** | Ícono institucional `1024x1024` PNG sin transparencias, adaptive icon y splash screen. |
-
----
-
 ## 🛠️ Tecnologías y Librerías
 
 - **Framework:** React Native (0.86) + Expo SDK 57 (Expo Router)

@@ -69,11 +69,14 @@ export default function MantenimientoAdminScreen() {
                   motivo: 'Jornada suspendida por lluvia intensa',
                   porLluvia: true,
                 });
-                void notificarSuspensionPorLluviaAsync(esp.nombre, 'Lluvia intensa en el predio');
               } catch (e) {
                 console.warn('Error al suspender cancha:', e);
               }
             }
+            await notificarSuspensionPorLluviaAsync(
+              'Canchas al Aire Libre',
+              'Lluvia intensa en el predio municipal'
+            );
             Alert.alert('Éxito', 'Se suspendieron las canchas al aire libre para el día de hoy.');
           },
         },

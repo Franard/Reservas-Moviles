@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { ThemedText } from '@/componentes/comun/ThemedText';
 import { useAuth } from '@/hooks/useAuth';
+import { useConectividad } from '@/hooks/useConectividad';
 import { useTheme } from '@/hooks/useTheme';
 import type { Turno } from '@/tipos';
 
@@ -35,6 +36,7 @@ export function ModalConfirmarReserva({
 }: ModalConfirmarReservaProps) {
   const { paleta } = useTheme();
   const { usuario } = useAuth();
+  const { conectado } = useConectividad();
   const [cantidad, setCantidad] = useState<number>(() =>
     Math.min(capacidadMaxima, 10)
   );
@@ -58,6 +60,12 @@ export function ModalConfirmarReserva({
   };
 
   const confirmar = async () => {
+    if (!conectado) {
+      setErrorLocal(
+        'Modo sin conexión: se requiere internet para sincronizar la grilla y evitar superposiciones.'
+      );
+      return;
+    }
     setErrorLocal(null);
     setEnviando(true);
     try {
@@ -183,6 +191,16 @@ export function ModalConfirmarReserva({
             </ThemedText>
           </View>
 
+          {/* Advertencia offline */}
+          {!conectado ? (
+            <View style={estilos.alertaOffline}>
+              <Ionicons name="cloud-offline-outline" size={16} color="#B71C1C" />
+              <ThemedText style={estilos.textoAlertaOffline}>
+                Modo sin conexión: se requiere internet para confirmar turnos y evitar superposiciones con otros vecinos.
+              </ThemedText>
+            </View>
+          ) : null}
+
           {/* Error si ocurrió */}
           {errorLocal ? (
             <View style={estilos.alertaError}>
@@ -198,18 +216,25 @@ export function ModalConfirmarReserva({
               accessibilityLabel="Confirmar reserva del turno"
               style={[
                 estilos.botonConfirmar,
-                { backgroundColor: paleta.primario, opacity: enviando ? 0.8 : 1 },
+                {
+                  backgroundColor: !conectado ? '#9E9E9E' : paleta.primario,
+                  opacity: enviando || !conectado ? 0.8 : 1,
+                },
               ]}
               onPress={confirmar}
-              disabled={enviando}
+              disabled={enviando || !conectado}
             >
               {enviando ? (
                 <ActivityIndicator size="small" color={paleta.sobrePrimario} />
               ) : (
                 <>
-                  <Ionicons name="checkmark-circle" size={20} color={paleta.sobrePrimario} />
+                  <Ionicons
+                    name={conectado ? 'checkmark-circle' : 'cloud-offline-outline'}
+                    size={20}
+                    color={paleta.sobrePrimario}
+                  />
                   <ThemedText style={[estilos.botonConfirmarTexto, { color: paleta.sobrePrimario }]}>
-                    Confirmar Reserva
+                    {conectado ? 'Confirmar Reserva' : 'Requiere Conexión'}
                   </ThemedText>
                 </>
               )}
@@ -352,6 +377,21 @@ const estilos = StyleSheet.create({
   capacidadMaxTexto: {
     fontSize: 12,
     textAlign: 'center',
+  },
+  alertaOffline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#FFEBEE',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  textoAlertaOffline: {
+    color: '#B71C1C',
+    fontSize: 12,
+    fontWeight: '600',
+    flexShrink: 1,
   },
   alertaError: {
     flexDirection: 'row',

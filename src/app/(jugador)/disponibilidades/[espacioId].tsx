@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { EstadoCarga } from '@/componentes/comun/EstadoCarga';
 import { EstadoError } from '@/componentes/comun/EstadoError';
@@ -9,6 +9,7 @@ import { ThemedView } from '@/componentes/comun/ThemedView';
 import { CeldaTurno } from '@/componentes/reservas/CeldaTurno';
 import { ModalConfirmarReserva } from '@/componentes/reservas/ModalConfirmarReserva';
 import { useAuth } from '@/hooks/useAuth';
+import { useConectividad } from '@/hooks/useConectividad';
 import { useCrearReserva, useDisponibilidad, useVentanaSieteDias } from '@/hooks/useDisponibilidad';
 import { useEspacioDetalle } from '@/hooks/useEspacios';
 import { useTheme } from '@/hooks/useTheme';
@@ -22,6 +23,7 @@ export default function DisponibilidadEspacioScreen() {
 
   const { paleta } = useTheme();
   const { usuario } = useAuth();
+  const { conectado } = useConectividad();
   const diasVentana = useVentanaSieteDias();
   const [fechaSeleccionada, setFechaSeleccionada] = useState<string>(
     () => diasVentana[0]?.fechaISO ?? new Date().toISOString().split('T')[0]
@@ -69,6 +71,13 @@ export default function DisponibilidadEspacioScreen() {
 
   const alConfirmarReserva = async (cantidadPersonas: number) => {
     if (!turnoAConfirmar) return;
+    if (!conectado) {
+      Alert.alert(
+        'Sin conexión a internet',
+        'Para reservar un turno nuevo necesitás conexión para sincronizar la grilla con el municipio y evitar superposiciones de horarios.'
+      );
+      return;
+    }
     if (!usuario) {
       router.push(`/(auth)/login?redirigir=/(jugador)/disponibilidades/${espacioId}` as never);
       return;

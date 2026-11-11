@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Platform, Vibration } from 'react-native';
+import { Platform } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -80,9 +80,7 @@ export function useAlternarFavorito() {
 
   return useMutation({
     mutationFn: async (espacioId: string) => {
-      if (Platform.OS === 'android') {
-        Vibration.vibrate(45);
-      } else if (Platform.OS === 'ios') {
+      if (Platform.OS !== 'web') {
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       }
       const respuesta = await alternarEspacioFavorito(espacioId, usuario?.id ?? null);

@@ -36,6 +36,7 @@ import {
 import { ErrorServicioAPI, simularRedAsync } from './apiCliente';
 import { obtenerUsuariosMemoria, sincronizarUsuarioEnKVSiActivo } from './auth';
 import { buscarEspacioMemoriaPorId } from './espacios';
+import { verificarConexionDirectaAsync } from '@/hooks/useConectividad';
 import {
   cancelarRecordatorioTurnoAsync,
   programarRecordatorioTurnoAsync,
@@ -290,6 +291,14 @@ export async function crearReserva(parametros: {
 }): Promise<RespuestaUno<Reserva>> {
   await simularRedAsync(260);
   const ahora = new Date();
+
+  const hayConexion = await verificarConexionDirectaAsync();
+  if (!hayConexion) {
+    throw new ErrorServicioAPI(
+      'SIN_CONEXION',
+      'No es posible confirmar reservas nuevas sin conexión a internet para evitar superposición de turnos.'
+    );
+  }
 
   const espacio = buscarEspacioMemoriaPorId(parametros.espacioId);
   if (!espacio || !espacio.activo) {

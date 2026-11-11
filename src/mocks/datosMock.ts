@@ -300,7 +300,7 @@ export const MOCK_RESERVAS_FIJAS: ReservaFija[] = [
     activa: true,
   },
   {
-    // Fija vencida (no debería bloquear la grilla actual)
+    // Fija vencida
     id: 'fij-04',
     espacioId: 'esp-02',
     titular: 'Torneo Invernal Sub-17',
@@ -327,7 +327,7 @@ export const MOCK_RESERVAS_FIJAS: ReservaFija[] = [
 
 export const MOCK_BLOQUEOS_MANTENIMIENTO: BloqueoMantenimiento[] = [
   {
-    // Día completo bloqueado por lluvia
+    // Bloqueo por lluvia
     id: 'blq-lluvia-01',
     espacioId: 'esp-02',
     fecha: FECHA_LLUVIA_COMPLETA,
@@ -358,7 +358,7 @@ export const MOCK_BLOQUEOS_MANTENIMIENTO: BloqueoMantenimiento[] = [
   },
 ];
 
-// Día con grilla llena (sin turnos libres)
+// Grilla llena
 const RESERVAS_GRILLA_LLENA: Reserva[] = Array.from({ length: 16 }, (_, idx) => {
   const hora = idx + 8;
   const hh = String(hora).padStart(2, '0');
@@ -378,7 +378,7 @@ const RESERVAS_GRILLA_LLENA: Reserva[] = Array.from({ length: 16 }, (_, idx) => 
 });
 
 export const MOCK_RESERVAS: Reserva[] = [
-  // 1) Reserva próxima activa del jugador Emiliano Ruiz (permite probar cancelación sin aviso >= 4 hs)
+  // Reserva de Emiliano
   {
     id: 'res-1180',
     turnoId: construirTurnoId('esp-02', FECHA_DIA_4, 19),
@@ -391,7 +391,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date()),
     cancelableHasta: calcularCancelableHasta(FECHA_DIA_4, '19:00'),
   },
-  // 2) Reserva de Emiliano para HOY a las 22:00 en Cancha 1 (lista para escaneo QR en puerta por Marcelo)
+  // Turno de hoy a la noche
   {
     id: 'res-1181',
     turnoId: construirTurnoId('esp-01', FECHA_HOY, 22),
@@ -404,7 +404,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date()),
     cancelableHasta: calcularCancelableHasta(FECHA_HOY, '22:00'),
   },
-  // 3) Reserva de Lucía Pereyra para HOY a las 23:00 en Básquet Parquet (para probar marcado de "Ausente" en agenda de hoy)
+  // Reserva de Lucía
   {
     id: 'res-1182',
     turnoId: construirTurnoId('esp-06', FECHA_HOY, 23),
@@ -417,7 +417,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date()),
     cancelableHasta: calcularCancelableHasta(FECHA_HOY, '23:00'),
   },
-  // Turno de hoy ya ingresado en puerta
+  // Turno ya ingresado
   {
     id: 'res-1183',
     turnoId: construirTurnoId('esp-09', FECHA_HOY, 10),
@@ -430,7 +430,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date(Date.now() - 86400000)),
     cancelableHasta: calcularCancelableHasta(FECHA_HOY, '10:00'),
   },
-  // Reserva cancelada (el turno vuelve a quedar libre)
+  // Reserva cancelada
   {
     id: 'res-1150',
     turnoId: construirTurnoId('esp-09', FECHA_HOY, 18),
@@ -443,7 +443,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date(Date.now() - 86400000 * 2)),
     cancelableHasta: calcularCancelableHasta(FECHA_HOY, '18:00'),
   },
-  // 6) Reserva pasada cumplida en el historial de Emiliano
+  // Turno cumplido
   {
     id: 'res-1090',
     turnoId: construirTurnoId('esp-02', FECHA_AYER, 20),
@@ -456,7 +456,7 @@ export const MOCK_RESERVAS: Reserva[] = [
     creadaEn: formatearDateTimeConZona(new Date(Date.now() - 86400000 * 4)),
     cancelableHasta: calcularCancelableHasta(FECHA_AYER, '20:00'),
   },
-  // 7) Reserva pasada con ausencia registrada (No-Show) en historial
+  // Ausente
   {
     id: 'res-1085',
     turnoId: construirTurnoId('esp-04', FECHA_ANTEAYER, 19),

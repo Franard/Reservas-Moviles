@@ -1,7 +1,4 @@
-/**
- * Contratos inmutables de entidades definidos en PRD 05 - Reservas Deportivas (págs. 7–11).
- * No agregar ni renombrar propiedades para garantizar compatibilidad directa con la API de la cátedra.
- */
+// Entidades de la aplicación
 
 export interface Coordenadas {
   latitud: number;

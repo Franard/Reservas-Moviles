@@ -317,7 +317,7 @@ export async function crearReserva(parametros: {
     );
   }
 
-  // 1. Verificar límite estricto de 3 reservas activas vigentes por persona
+  // Máximo 3 reservas activas
   const activasVigentes = contarReservasActivasVigentes(parametros.usuarioId, ahora);
   if (activasVigentes >= MAX_RESERVAS_ACTIVAS_POR_USUARIO) {
     throw new ErrorServicioAPI(
@@ -326,7 +326,7 @@ export async function crearReserva(parametros: {
     );
   }
 
-  // 2. Verificar en tiempo real que el turno continúe libre en la grilla actual
+  // Chequear si el turno sigue libre
   const grilla = construirGrillaEspacioSincrona(parametros.espacioId, parametros.fechaISO, ahora);
   const turnoObjetivo = grilla.find((t) => t.id === parametros.turnoId);
 

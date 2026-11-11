@@ -68,7 +68,7 @@ export function BotonPerfilHeader({ modo }: BotonPerfilHeaderProps) {
     // Si está en el panel de admin/encargado, opción de ver app ciudadana
     if (modo === 'panel') {
       botones.push({
-        text: '👀 Ver catálogo (Jugador)',
+        text: 'Ver catálogo como Jugador',
         onPress: () => router.push('/(jugador)'),
       });
     }
@@ -78,8 +78,8 @@ export function BotonPerfilHeader({ modo }: BotonPerfilHeaderProps) {
       botones.push({
         text:
           usuario.rol === 'administrador'
-            ? '⚙️ Ir al Panel Admin'
-            : '📋 Ir al Panel Encargado',
+            ? 'Ir al Panel de Administración'
+            : 'Ir al Panel de Encargado',
         onPress: () => {
           if (usuario.rol === 'administrador') {
             router.push('/(admin)/mantenimiento');
@@ -92,7 +92,7 @@ export function BotonPerfilHeader({ modo }: BotonPerfilHeaderProps) {
 
     // Cerrar sesión
     botones.push({
-      text: '🚪 Cerrar Sesión',
+      text: 'Cerrar Sesión',
       style: 'destructive',
       onPress: () => {
         Alert.alert(
@@ -210,3 +210,4 @@ const estilos = StyleSheet.create({
     fontSize: 13,
   },
 });
+

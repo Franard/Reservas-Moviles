@@ -1,4 +1,4 @@
-# Reservas Deportivas Villaguay ⚽🎾🏀
+# Reservas Deportivas Villaguay
 
 Aplicación móvil desarrollada con **React Native** y **Expo** para la gestión y reserva de turnos en las canchas y espacios deportivos municipales de la ciudad de Villaguay, Entre Ríos.
 
@@ -6,7 +6,7 @@ Proyecto correspondiente al **Trabajo Final Integrador** de la cátedra de Progr
 
 ---
 
-## 📱 Funcionalidades de la Aplicación
+## Funcionalidades de la Aplicación
 
 ### 1. Experiencia del Jugador (Vecino)
 - **Catálogo de Espacios:** Consulta de las 11 canchas municipales con fotos, características (superficie, techado, iluminación nocturna) y video de recorrido nativo.
@@ -30,7 +30,7 @@ Proyecto correspondiente al **Trabajo Final Integrador** de la cátedra de Progr
 
 ---
 
-## 👥 Cuentas de Prueba (Demo Cátedra)
+## Cuentas de Prueba
 
 Todas las cuentas utilizan la contraseña unificada: **`villaguay2026`**
 
@@ -42,7 +42,7 @@ Todas las cuentas utilizan la contraseña unificada: **`villaguay2026`**
 
 ---
 
-## 🌐 Conexión con la API de la Cátedra
+## Conexión con la API
 
 Esta aplicación consume la API oficial provista por la cátedra de Desarrollo para Móviles (UNER):
 - **Repositorio de la API:** [github.com/franco-ruisdias-uner/api-proyectos-mobile](https://github.com/franco-ruisdias-uner/api-proyectos-mobile)
@@ -57,7 +57,7 @@ EXPO_PUBLIC_API_URL=http://<IP_DE_TU_PC>:3000
 
 ---
 
-## 🛠️ Tecnologías y Librerías
+## Tecnologías y Librerías
 
 - **Framework:** React Native (0.86) + Expo SDK 57 (Expo Router)
 - **Lenguaje:** TypeScript Estricto
@@ -68,7 +68,7 @@ EXPO_PUBLIC_API_URL=http://<IP_DE_TU_PC>:3000
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto
+## Cómo Ejecutar el Proyecto
 
 ### 1. Clonar el repositorio
 ```bash

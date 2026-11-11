@@ -269,7 +269,7 @@ export function generarGrillaDiaria(
     let reservaId: string | null = null;
     let motivoBloqueo: string | null = null;
 
-    // 1. Prioridad máxima: Bloqueos por Mantenimiento o Lluvia
+    // 1. Bloqueo por lluvia o mantenimiento
     const bloqueo = bloqueosMantenimiento.find(
       (b) => b.inicio <= inicioStr && b.fin > inicioStr
     );
@@ -278,7 +278,7 @@ export function generarGrillaDiaria(
       motivoBloqueo = bloqueo.motivo;
     }
 
-    // 2. Segunda prioridad: Reserva Fija Semanal activa y dentro de vigencia (desde..hasta)
+    // 2. Reserva fija semanal
     if (estado === 'libre') {
       const fija = reservasFijas.find((rf) => {
         if (!rf.activa || rf.espacioId !== espacioId || rf.dia !== diaSemana) {
@@ -295,7 +295,7 @@ export function generarGrillaDiaria(
       }
     }
 
-    // 3. Tercera prioridad: Reserva Esporádica activa (confirmada o cumplida)
+    // 3. Reserva activa
     if (estado === 'libre') {
       const reserva = reservasExistentes.find(
         (r) =>
@@ -310,7 +310,7 @@ export function generarGrillaDiaria(
       }
     }
 
-    // 4. Cuarta prioridad: Bloquear turnos cuya hora de inicio ya alcanzó o superó la hora actual
+    // 4. Turnos pasados
     if (estado === 'libre') {
       if (esPasado || (esHoy && hora <= ahora.getHours())) {
         estado = 'mantenimiento';

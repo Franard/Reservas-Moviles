@@ -54,10 +54,6 @@ export function ReproductorVideoEspacio({
             backgroundColor: '#000000',
           },
         })}
-        <View style={estilos.etiquetaVideo}>
-          <Ionicons name="videocam" size={14} color="#FFFFFF" />
-          <ThemedText style={estilos.textoEtiqueta}>Recorrido audiovisual</ThemedText>
-        </View>
       </View>
     );
   }
@@ -94,10 +90,6 @@ function ReproductorActivo({
         nativeControls={true}
         contentFit="contain"
       />
-      <View style={estilos.etiquetaVideo}>
-        <Ionicons name="videocam" size={14} color="#FFFFFF" />
-        <ThemedText style={estilos.textoEtiqueta}>Recorrido audiovisual (20-30s)</ThemedText>
-      </View>
     </View>
   );
 }
@@ -115,23 +107,6 @@ const estilos = StyleSheet.create({
   video: {
     width: '100%',
     height: '100%',
-  },
-  etiquetaVideo: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    backgroundColor: 'rgba(11, 58, 93, 0.85)',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
-  },
-  textoEtiqueta: {
-    color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: '600',
   },
   tarjetaSinVideo: {
     width: '100%',

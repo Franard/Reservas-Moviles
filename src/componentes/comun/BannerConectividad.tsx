@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Network from 'expo-network';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { ThemedText } from '@/componentes/comun/ThemedText';
@@ -9,6 +10,7 @@ import { useTheme } from '@/hooks/useTheme';
 export function BannerConectividad() {
   const { conectado, internetAlcanzable } = useConectividad();
   const { paleta } = useTheme();
+  const insets = useSafeAreaInsets();
 
   if (conectado && internetAlcanzable) {
     return null;
@@ -24,7 +26,13 @@ export function BannerConectividad() {
 
   return (
     <View
-      style={[estilos.contenedor, { backgroundColor: paleta.peligro }]}
+      style={[
+        estilos.contenedor,
+        {
+          backgroundColor: paleta.peligro,
+          paddingTop: Math.max(insets.top, 6) + 4,
+        },
+      ]}
       accessibilityRole="alert"
       accessibilityLiveRegion="polite"
     >

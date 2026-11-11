@@ -92,6 +92,25 @@ export default function LoginScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView contentContainerStyle={estilos.contenedor} keyboardShouldPersistTaps="handled">
+          {/* Botón superior de volver / continuar como invitado */}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Volver atrás o continuar como invitado"
+            style={estilos.botonAtras}
+            onPress={() => {
+              if (router.canGoBack()) {
+                router.back();
+              } else {
+                router.replace('/(jugador)');
+              }
+            }}
+          >
+            <Ionicons name="arrow-back" size={20} color={paleta.primario} />
+            <ThemedText style={[estilos.textoAtras, { color: paleta.primario }]}>
+              Volver (modo invitado)
+            </ThemedText>
+          </Pressable>
+
           <ThemedText style={[estilos.titulo, { color: paleta.primario }]}>
             Dirección de Deportes
           </ThemedText>
@@ -241,6 +260,18 @@ export default function LoginScreen() {
           <Link href="/(auth)/registro" style={[estilos.enlace, { color: paleta.acento }]}>
             ¿No tenés cuenta? Registrate gratis
           </Link>
+
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Explorar catálogo de canchas como invitado"
+            style={[estilos.botonInvitado, { borderColor: paleta.borde, backgroundColor: paleta.superficie }]}
+            onPress={() => router.replace('/(jugador)')}
+          >
+            <Ionicons name="eye-outline" size={18} color={paleta.primario} />
+            <ThemedText style={[estilos.textoInvitado, { color: paleta.primario }]}>
+              Mirar catálogo como invitado
+            </ThemedText>
+          </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
     </ThemedView>
@@ -356,5 +387,32 @@ const estilos = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 15,
+  },
+  botonAtras: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    alignSelf: 'flex-start',
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    marginBottom: 16,
+  },
+  textoAtras: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  botonInvitado: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 12,
+    marginTop: 16,
+  },
+  textoInvitado: {
+    fontSize: 14,
+    fontWeight: '700',
   },
 });

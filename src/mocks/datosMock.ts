@@ -40,8 +40,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
       'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'No se permite calzado con tapones metálicos ni de aluminio. Ingreso puntual con QR.',
     activo: true,
   },
@@ -78,8 +77,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
     imagenes: [
       'https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/sintel/mp4/h264/360/Sintel_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'Sujeta a suspensión inmediata en caso de lluvia para preservar el césped natural.',
     activo: true,
   },
@@ -133,8 +131,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
     imagenes: [
       'https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'Ingreso únicamente con calzado deportivo limpio (no calle). Prohibido ingresar bebidas azucaradas.',
     activo: true,
   },
@@ -170,8 +167,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
     imagenes: [
       'https://images.unsplash.com/photo-1592656094267-764a45160876?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'Suela blanca o non-marking obligatoria.',
     activo: true,
   },
@@ -189,8 +185,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
     imagenes: [
       'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/sintel/mp4/h264/360/Sintel_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'Obligatorio zapatillas lisas para polvo de ladrillo y pasar la rastra al finalizar.',
     activo: true,
   },
@@ -226,8 +221,7 @@ export const MOCK_ESPACIOS: Espacio[] = [
     imagenes: [
       'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?auto=format&fit=crop&w=900&q=80',
     ],
-    videoUrl:
-      'https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4',
+    videoUrl: null,
     reglas: 'Apto futsal, handball, básquet y eventos escolares. Respetar horario estricto de cierre.',
     activo: true,
   },

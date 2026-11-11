@@ -21,6 +21,7 @@ import {
   useEliminarBloqueoMantenimiento,
 } from '@/hooks/useAdminAgenda';
 import { useEspacios } from '@/hooks/useEspacios';
+import { useVentanaSieteDias } from '@/hooks/useDisponibilidad';
 import { useTheme } from '@/hooks/useTheme';
 import { notificarSuspensionPorLluviaAsync } from '@/servicios/notificaciones';
 import type { BloqueoMantenimiento } from '@/tipos';
@@ -30,13 +31,14 @@ import { extraerInfoErrorUI } from '@/utils/erroresUI';
 export default function MantenimientoAdminScreen() {
   const { paleta } = useTheme();
   const hoyISO = formatearFechaISOLocal(new Date());
+  const diasVentana = useVentanaSieteDias();
 
   const { data: espacios } = useEspacios();
   const { data: bloqueos, isLoading, refetch, isRefetching } = useBloqueosMantenimiento();
   const { mutateAsync: crearBloqueoAsync, isPending: guardandoBloqueo } = useCrearBloqueoMantenimiento();
   const { mutateAsync: eliminarBloqueoAsync } = useEliminarBloqueoMantenimiento();
 
-  // Modal para nuevo bloqueo
+  // Modal para nuevo bloqueo individual
   const [modalVisible, setModalVisible] = useState(false);
   const [espacioId, setEspacioId] = useState('esp-01');
   const [fecha, setFecha] = useState(hoyISO);
@@ -47,41 +49,48 @@ export default function MantenimientoAdminScreen() {
   const [porLluvia, setPorLluvia] = useState(true);
   const [errorForm, setErrorForm] = useState<string | null>(null);
 
-  // Botón de emergencia para lluvia
+  // Modal para suspensión general por lluvia
+  const [modalLluviaVisible, setModalLluviaVisible] = useState(false);
+  const [fechaLluvia, setFechaLluvia] = useState(hoyISO);
+  const [motivoLluvia, setMotivoLluvia] = useState('Alerta de tormenta y anegamiento de canchas');
+  const [aplicandoLluvia, setAplicandoLluvia] = useState(false);
+
+  // Abrir diálogo de suspensión por lluvia
   const suspenderTodasPorLluvia = () => {
-    Alert.alert(
-      'Suspender por Lluvia',
-      '¿Querés suspender hoy todas las canchas al aire libre? Se cancelarán los turnos sin penalizar a los vecinos.',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Confirmar Suspensión',
-          style: 'destructive',
-          onPress: async () => {
-            const alAireLibre = (espacios ?? []).filter((e) => !e.techado);
-            for (const esp of alAireLibre) {
-              try {
-                await crearBloqueoAsync({
-                  espacioId: esp.id,
-                  fecha: hoyISO,
-                  inicio: '08:00',
-                  fin: '24:00',
-                  motivo: 'Jornada suspendida por lluvia intensa',
-                  porLluvia: true,
-                });
-              } catch (e) {
-                console.warn('Error al suspender cancha:', e);
-              }
-            }
-            await notificarSuspensionPorLluviaAsync(
-              'Canchas al Aire Libre',
-              'Lluvia intensa en el predio municipal'
-            );
-            Alert.alert('Éxito', 'Se suspendieron las canchas al aire libre para el día de hoy.');
-          },
-        },
-      ]
-    );
+    setFechaLluvia(hoyISO);
+    setMotivoLluvia('Alerta de tormenta y anegamiento de canchas');
+    setModalLluviaVisible(true);
+  };
+
+  // Confirmar y aplicar la suspensión masiva en la fecha seleccionada
+  const ejecutarSuspensionLluvia = async () => {
+    setAplicandoLluvia(true);
+    try {
+      const alAireLibre = (espacios ?? []).filter((e) => !e.techado);
+      for (const esp of alAireLibre) {
+        try {
+          await crearBloqueoAsync({
+            espacioId: esp.id,
+            fecha: fechaLluvia,
+            inicio: '08:00',
+            fin: '24:00',
+            motivo: motivoLluvia.trim() || 'Jornada suspendida por lluvia intensa',
+            porLluvia: true,
+          });
+        } catch (e) {
+          console.warn('Error al suspender cancha:', e);
+        }
+      }
+      await notificarSuspensionPorLluviaAsync(
+        'Canchas al Aire Libre',
+        motivoLluvia.trim() || 'Lluvia intensa en el predio municipal'
+      );
+      setModalLluviaVisible(false);
+      const diaSeleccionado = diasVentana.find((d) => d.fechaISO === fechaLluvia)?.etiquetaLarga ?? fechaLluvia;
+      Alert.alert('Suspensión confirmada', `Se suspendieron todas las canchas al aire libre para ${diaSeleccionado}.`);
+    } finally {
+      setAplicandoLluvia(false);
+    }
   };
 
   const guardarNuevoBloqueo = async () => {
@@ -285,7 +294,36 @@ export default function MantenimientoAdminScreen() {
               </ScrollView>
 
               {/* Fecha */}
-              <ThemedText style={estilos.label}>Fecha (AAAA-MM-DD):</ThemedText>
+              <ThemedText style={estilos.label}>Fecha:</ThemedText>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
+                {diasVentana.map((d) => {
+                  const activo = fecha === d.fechaISO;
+                  return (
+                    <Pressable
+                      key={d.fechaISO}
+                      style={[
+                        estilos.chipCancha,
+                        {
+                          backgroundColor: activo ? paleta.primario : paleta.fondo,
+                          borderWidth: 1,
+                          borderColor: activo ? paleta.primario : paleta.borde,
+                        },
+                      ]}
+                      onPress={() => setFecha(d.fechaISO)}
+                    >
+                      <ThemedText
+                        style={{
+                          color: activo ? paleta.sobrePrimario : paleta.texto,
+                          fontSize: 12,
+                          fontWeight: '700',
+                        }}
+                      >
+                        {d.etiquetaCorta}
+                      </ThemedText>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
               <TextInput
                 style={[estilos.inputTexto, { backgroundColor: paleta.fondo, color: paleta.texto, borderColor: paleta.borde }]}
                 value={fecha}
@@ -350,6 +388,104 @@ export default function MantenimientoAdminScreen() {
               >
                 <ThemedText style={[estilos.textoGuardar, { color: paleta.sobrePrimario }]}>
                   {guardandoBloqueo ? 'Aplicando...' : 'Aplicar Bloqueo'}
+                </ThemedText>
+              </Pressable>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal para suspender canchas al aire libre por lluvia */}
+      <Modal visible={modalLluviaVisible} transparent animationType="slide">
+        <View style={estilos.telonModal}>
+          <View style={[estilos.tarjetaModal, { backgroundColor: paleta.superficie }]}>
+            <View style={estilos.modalCabecera}>
+              <View style={estilos.filaIconoTipo}>
+                <Ionicons name="rainy" size={22} color="#B71C1C" />
+                <ThemedText style={[estilos.modalTitulo, { color: '#B71C1C' }]}>
+                  Suspensión por Lluvia
+                </ThemedText>
+              </View>
+              <Pressable onPress={() => setModalLluviaVisible(false)} disabled={aplicandoLluvia}>
+                <Ionicons name="close" size={24} color={paleta.textoSecundario} />
+              </Pressable>
+            </View>
+
+            <ScrollView contentContainerStyle={estilos.formContenido}>
+              <ThemedText style={[estilos.descripcionLluvia, { color: paleta.textoSecundario }]}>
+                Podés suspender la jornada de hoy o programar la suspensión con anticipación si hay pronóstico de tormenta para los próximos días. Se cancelarán las reservas sin penalizar a los vecinos.
+              </ThemedText>
+
+              {/* Selector de Fecha para la suspensión */}
+              <ThemedText style={estilos.label}>Fecha a suspender:</ThemedText>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
+                {diasVentana.map((d) => {
+                  const activo = fechaLluvia === d.fechaISO;
+                  return (
+                    <Pressable
+                      key={d.fechaISO}
+                      style={[
+                        estilos.chipCancha,
+                        {
+                          backgroundColor: activo ? '#B71C1C' : paleta.fondo,
+                          borderWidth: 1,
+                          borderColor: activo ? '#B71C1C' : paleta.borde,
+                        },
+                      ]}
+                      onPress={() => setFechaLluvia(d.fechaISO)}
+                    >
+                      <ThemedText
+                        style={{
+                          color: activo ? '#FFFFFF' : paleta.texto,
+                          fontSize: 12,
+                          fontWeight: '700',
+                        }}
+                      >
+                        {d.etiquetaCorta}
+                      </ThemedText>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+
+              {/* Motivo informado */}
+              <ThemedText style={estilos.label}>Motivo anunciado a los vecinos:</ThemedText>
+              <TextInput
+                style={[
+                  estilos.inputTexto,
+                  estilos.inputArea,
+                  { backgroundColor: paleta.fondo, color: paleta.texto, borderColor: paleta.borde },
+                ]}
+                value={motivoLluvia}
+                onChangeText={setMotivoLluvia}
+                placeholder="Ej: Alerta de tormenta eléctrica y canchas anegadas"
+                multiline
+                numberOfLines={2}
+              />
+
+              {/* Resumen de canchas afectadas */}
+              <View style={[estilos.cajaCanchasAfectadas, { backgroundColor: paleta.fondo, borderColor: paleta.borde }]}>
+                <ThemedText style={[estilos.tituloCanchasAfectadas, { color: paleta.primario }]}>
+                  Canchas descubiertas que se suspenderán:
+                </ThemedText>
+                <ThemedText style={[estilos.listaCanchasTexto, { color: paleta.textoSecundario }]}>
+                  {(espacios ?? [])
+                    .filter((e) => !e.techado)
+                    .map((e) => e.nombre)
+                    .join(' · ')}
+                </ThemedText>
+                <ThemedText style={estilos.avisoTechadas}>
+                  ✓ Los espacios techados (Gimnasio Cerrado, Básquet Parquet y Vóley Techado) continuarán operando normalmente.
+                </ThemedText>
+              </View>
+
+              <Pressable
+                style={[estilos.botonGuardar, { backgroundColor: '#B71C1C', opacity: aplicandoLluvia ? 0.7 : 1 }]}
+                onPress={ejecutarSuspensionLluvia}
+                disabled={aplicandoLluvia}
+              >
+                <ThemedText style={[estilos.textoGuardar, { color: '#FFFFFF' }]}>
+                  {aplicandoLluvia ? 'Aplicando suspensión...' : 'Confirmar Suspensión General'}
                 </ThemedText>
               </Pressable>
             </ScrollView>
@@ -530,5 +666,31 @@ const estilos = StyleSheet.create({
   textoGuardar: {
     fontWeight: '700',
     fontSize: 15,
+  },
+  descripcionLluvia: {
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 4,
+  },
+  cajaCanchasAfectadas: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 12,
+    gap: 6,
+    marginTop: 4,
+  },
+  tituloCanchasAfectadas: {
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  listaCanchasTexto: {
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  avisoTechadas: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#2E7D32',
+    marginTop: 2,
   },
 });

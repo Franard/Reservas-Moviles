@@ -48,7 +48,6 @@ export default function ReservasFijasAdminScreen() {
   const { mutateAsync: alternarFijaAsync } = useAlternarReservaFija();
   const { mutateAsync: actualizarPrecioAsync, isPending: guardandoPrecio } = useActualizarPrecioEspacio();
 
-  // Modal para nueva fija
   const [modalFijaVisible, setModalFijaVisible] = useState(false);
   const [espacioIdFija, setEspacioIdFija] = useState('esp-01');
   const [titular, setTitular] = useState('');
@@ -58,7 +57,6 @@ export default function ReservasFijasAdminScreen() {
   const [desde, setDesde] = useState(formatearFechaISOLocal(new Date()));
   const [errorFija, setErrorFija] = useState<string | null>(null);
 
-  // Modal para cambiar precio
   const [espacioParaPrecio, setEspacioParaPrecio] = useState<Espacio | null>(null);
   const [nuevoPrecioTexto, setNuevoPrecioTexto] = useState('');
   const [errorPrecio, setErrorPrecio] = useState<string | null>(null);
@@ -121,7 +119,6 @@ export default function ReservasFijasAdminScreen() {
 
   return (
     <ThemedView style={estilos.contenedor}>
-      {/* Selector de Sección (Pestañas) */}
       <View style={[estilos.barraPestanas, { backgroundColor: paleta.superficie, borderColor: paleta.borde }]}>
         <Pressable
           style={[
@@ -168,7 +165,6 @@ export default function ReservasFijasAdminScreen() {
         </Pressable>
       </View>
 
-      {/* SECCIÓN 1: RESERVAS FIJAS */}
       {seccionActiva === 'fijas' ? (
         <View style={estilos.contenedorSeccion}>
           <View style={estilos.filaBotonNuevo}>
@@ -245,7 +241,6 @@ export default function ReservasFijasAdminScreen() {
           )}
         </View>
       ) : (
-        /* SECCIÓN 2: TARIFAS */
         <View style={estilos.contenedorSeccion}>
           <ThemedText style={[estilos.subtituloSeccion, estilos.paddingSeccion, { color: paleta.textoSecundario }]}>
             Precios vigentes por turno de 1 hora
@@ -300,8 +295,7 @@ export default function ReservasFijasAdminScreen() {
           )}
         </View>
       )}
-
-      {/* Modal para crear Reserva Fija */}
+      {/*Reserva fija*/}
       <Modal visible={modalFijaVisible} transparent animationType="slide">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaModal, { backgroundColor: paleta.superficie }]}>
@@ -321,7 +315,6 @@ export default function ReservasFijasAdminScreen() {
             ) : null}
 
             <ScrollView contentContainerStyle={estilos.formContenido}>
-              {/* Titular */}
               <ThemedText style={estilos.label}>Titular (Club / Escuela / Grupo):</ThemedText>
               <TextInput
                 style={[estilos.inputTexto, { backgroundColor: paleta.fondo, color: paleta.texto, borderColor: paleta.borde }]}
@@ -330,7 +323,6 @@ export default function ReservasFijasAdminScreen() {
                 placeholder="Ej: Escuela Municipal de Vóley"
               />
 
-              {/* Cancha */}
               <ThemedText style={estilos.label}>Espacio Deportivo:</ThemedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
                 {(espacios ?? []).map((e) => {
@@ -352,7 +344,6 @@ export default function ReservasFijasAdminScreen() {
                 })}
               </ScrollView>
 
-              {/* Día de la semana */}
               <ThemedText style={estilos.label}>Día de repetición semanal:</ThemedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
                 {NOMBRES_DIAS.map((nombre, idx) => {
@@ -374,7 +365,6 @@ export default function ReservasFijasAdminScreen() {
                 })}
               </ScrollView>
 
-              {/* Horas */}
               <View style={estilos.filaHoras}>
                 <View style={{ flex: 1 }}>
                   <ThemedText style={estilos.label}>Inicio (HH:00):</ThemedText>
@@ -396,7 +386,6 @@ export default function ReservasFijasAdminScreen() {
                 </View>
               </View>
 
-              {/* Fecha Desde */}
               <ThemedText style={estilos.label}>Fecha inicio de vigencia:</ThemedText>
               <TextInput
                 style={[estilos.inputTexto, { backgroundColor: paleta.fondo, color: paleta.texto, borderColor: paleta.borde }]}
@@ -419,7 +408,7 @@ export default function ReservasFijasAdminScreen() {
         </View>
       </Modal>
 
-      {/* Modal para Modificar Precio */}
+      {/*Precio */}
       <Modal visible={Boolean(espacioParaPrecio)} transparent animationType="fade">
         <View style={estilos.telonModalCentro}>
           <View style={[estilos.tarjetaModalCentro, { backgroundColor: paleta.superficie }]}>

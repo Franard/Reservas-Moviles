@@ -119,7 +119,7 @@ export function enriquecerReserva(reserva: Reserva, ahora: Date = new Date()): R
   };
 }
 
-// Cuenta las reservas activas (que todavía no terminaron)
+// Cuenta las reservas activas
 export function contarReservasActivasVigentes(
   usuarioId: string,
   ahora: Date = new Date()
@@ -172,7 +172,7 @@ export async function listarReservasUsuario(usuarioId: string): Promise<Respuest
   };
 }
 
-// Guarda las reservas en SQLite para que se vean offline
+// Guarda las reservas en SQLite
 export async function sincronizarReservasUsuarioEnSqlite(usuarioId: string): Promise<void> {
   const db = await obtenerBaseDatosAsync();
   if (!db) return;
@@ -192,7 +192,6 @@ export async function listarReservasDetalladasUsuario(
   try {
     await simularRedAsync(200);
     listaBase = reservasMemoria.filter((r) => r.usuarioId === usuarioId);
-    // Sincronizar en SQLite en segundo plano
     void sincronizarReservasUsuarioEnSqlite(usuarioId);
   } catch (error) {
     // Si no hay red, leer las reservas guardadas en SQLite local

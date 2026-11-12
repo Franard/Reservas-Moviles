@@ -92,7 +92,6 @@ export default function LoginScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView contentContainerStyle={estilos.contenedor} keyboardShouldPersistTaps="handled">
-          {/* Botón superior de volver / continuar como invitado */}
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Volver atrás o continuar como invitado"
@@ -118,7 +117,7 @@ export default function LoginScreen() {
             Municipalidad de Villaguay — Ingresá a tu cuenta
           </ThemedText>
 
-          {/* Accesos rápidos de prueba para facilitar la defensa */}
+          {/* Accesos rápidos de prueba*/}
           <View style={estilos.bloqueDemos}>
             <ThemedText style={[estilos.etiquetaDemos, { color: paleta.textoSecundario }]}>
               Cuentas demo para prueba rápida:

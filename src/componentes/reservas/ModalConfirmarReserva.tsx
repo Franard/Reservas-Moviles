@@ -102,7 +102,6 @@ export function ModalConfirmarReserva({
             { backgroundColor: paleta.superficie, borderColor: paleta.borde },
           ]}
         >
-          {/* Cabecera */}
           <View style={estilos.encabezado}>
             <View style={estilos.filaTitulo}>
               <Ionicons name="flash" size={20} color={paleta.acento} />
@@ -115,7 +114,6 @@ export function ModalConfirmarReserva({
             </Pressable>
           </View>
 
-          {/* Resumen del Turno */}
           <View
             style={[
               estilos.cajaResumen,
@@ -152,7 +150,6 @@ export function ModalConfirmarReserva({
             </View>
           </View>
 
-          {/* Selector de Personas */}
           <View style={estilos.seccionJugadores}>
             <ThemedText style={estilos.etiquetaJugadores}>
               Cantidad de personas en cancha:
@@ -191,7 +188,6 @@ export function ModalConfirmarReserva({
             </ThemedText>
           </View>
 
-          {/* Advertencia offline */}
           {!conectado ? (
             <View style={estilos.alertaOffline}>
               <Ionicons name="cloud-offline-outline" size={16} color="#B71C1C" />

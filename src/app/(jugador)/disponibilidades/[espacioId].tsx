@@ -106,7 +106,7 @@ export default function DisponibilidadEspacioScreen() {
           </ThemedText>
         ) : null}
 
-        {/* Selector de los 7 días */}
+
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -141,7 +141,6 @@ export default function DisponibilidadEspacioScreen() {
           })}
         </ScrollView>
 
-        {/* Banners informativos del día */}
         {resumenDia.diaCompletoBloqueado ? (
           <View style={[estilos.alertaJornada, { backgroundColor: paleta.peligro }]}>
             <ThemedText style={estilos.alertaTexto}>
@@ -180,7 +179,6 @@ export default function DisponibilidadEspacioScreen() {
         )}
       />
 
-      {/* Modal de Reserva Rápida en 2 Toques */}
       <ModalConfirmarReserva
         visible={Boolean(turnoAConfirmar)}
         turno={turnoAConfirmar}

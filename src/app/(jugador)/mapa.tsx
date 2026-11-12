@@ -67,9 +67,9 @@ function calcularDistanciaKm(
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return Math.round(R * c * 10) / 10;
 }
@@ -124,7 +124,6 @@ export default function MapaComplejosScreen() {
 
   return (
     <ThemedView style={estilos.contenedor}>
-      {/* Vista Nativa de Mapa o Fallback Web */}
       {Platform.OS !== 'web' ? (
         <VistaMapaNativa
           complejos={COMPLEJOS_VILLAGUAY}
@@ -150,7 +149,6 @@ export default function MapaComplejosScreen() {
         </View>
       )}
 
-      {/* Lista de Complejos con cálculo de distancia y acción "Cómo llegar" */}
       <ScrollView contentContainerStyle={estilos.listaComplejos}>
         {permisoUbicacionDenegado ? (
           <View style={[estilos.alertaUbicacion, { backgroundColor: paleta.superficie }]}>
@@ -164,11 +162,11 @@ export default function MapaComplejosScreen() {
         {COMPLEJOS_VILLAGUAY.map((comp) => {
           const distancia = ubicacionUsuario
             ? calcularDistanciaKm(
-                ubicacionUsuario.latitud,
-                ubicacionUsuario.longitud,
-                comp.latitud,
-                comp.longitud
-              )
+              ubicacionUsuario.latitud,
+              ubicacionUsuario.longitud,
+              comp.latitud,
+              comp.longitud
+            )
             : null;
 
           const esActivo = complejoSeleccionado.id === comp.id;

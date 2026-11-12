@@ -38,7 +38,7 @@ export default function MantenimientoAdminScreen() {
   const { mutateAsync: crearBloqueoAsync, isPending: guardandoBloqueo } = useCrearBloqueoMantenimiento();
   const { mutateAsync: eliminarBloqueoAsync } = useEliminarBloqueoMantenimiento();
 
-  // Modal para nuevo bloqueo individual
+  // bloqueo individual
   const [modalVisible, setModalVisible] = useState(false);
   const [espacioId, setEspacioId] = useState('esp-01');
   const [fecha, setFecha] = useState(hoyISO);
@@ -49,20 +49,19 @@ export default function MantenimientoAdminScreen() {
   const [porLluvia, setPorLluvia] = useState(true);
   const [errorForm, setErrorForm] = useState<string | null>(null);
 
-  // Modal para suspensión general por lluvia
+  //suspensión general por lluvia
   const [modalLluviaVisible, setModalLluviaVisible] = useState(false);
   const [fechaLluvia, setFechaLluvia] = useState(hoyISO);
   const [motivoLluvia, setMotivoLluvia] = useState('Alerta de tormenta y anegamiento de canchas');
   const [aplicandoLluvia, setAplicandoLluvia] = useState(false);
 
-  // Abrir diálogo de suspensión por lluvia
+
   const suspenderTodasPorLluvia = () => {
     setFechaLluvia(hoyISO);
     setMotivoLluvia('Alerta de tormenta y anegamiento de canchas');
     setModalLluviaVisible(true);
   };
 
-  // Confirmar y aplicar la suspensión masiva en la fecha seleccionada
   const ejecutarSuspensionLluvia = async () => {
     setAplicandoLluvia(true);
     try {
@@ -159,7 +158,6 @@ export default function MantenimientoAdminScreen() {
 
   return (
     <ThemedView style={estilos.contenedor}>
-      {/* Botones de acción superior */}
       <View style={[estilos.barraAcciones, { backgroundColor: paleta.superficie, borderColor: paleta.borde }]}>
         <Pressable
           style={[estilos.botonAlertaLluvia, { backgroundColor: '#B71C1C' }]}
@@ -185,7 +183,6 @@ export default function MantenimientoAdminScreen() {
         </Pressable>
       </View>
 
-      {/* Lista de bloqueos activos */}
       {isLoading ? (
         <EstadoCarga mensaje="Cargando bloqueos programados..." />
       ) : (
@@ -251,7 +248,7 @@ export default function MantenimientoAdminScreen() {
         />
       )}
 
-      {/* Modal para crear bloqueo */}
+      {/*crear bloqueo */}
       <Modal visible={modalVisible} transparent animationType="slide">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaModal, { backgroundColor: paleta.superficie }]}>
@@ -293,7 +290,6 @@ export default function MantenimientoAdminScreen() {
                 })}
               </ScrollView>
 
-              {/* Fecha */}
               <ThemedText style={estilos.label}>Fecha:</ThemedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
                 {diasVentana.map((d) => {
@@ -331,7 +327,6 @@ export default function MantenimientoAdminScreen() {
                 placeholder="AAAA-MM-DD"
               />
 
-              {/* Switch día completo */}
               <View style={estilos.filaSwitch}>
                 <ThemedText style={estilos.labelSwitch}>Bloquear jornada completa</ThemedText>
                 <Switch value={diaCompleto} onValueChange={setDiaCompleto} />
@@ -360,7 +355,6 @@ export default function MantenimientoAdminScreen() {
                 </View>
               ) : null}
 
-              {/* Switch es por lluvia */}
               <View style={estilos.filaSwitch}>
                 <ThemedText style={estilos.labelSwitch}>Es por lluvia o anegamiento</ThemedText>
                 <Switch value={porLluvia} onValueChange={setPorLluvia} />
@@ -395,7 +389,7 @@ export default function MantenimientoAdminScreen() {
         </View>
       </Modal>
 
-      {/* Modal para suspender canchas al aire libre por lluvia */}
+      {/*suspension lluvia */}
       <Modal visible={modalLluviaVisible} transparent animationType="slide">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaModal, { backgroundColor: paleta.superficie }]}>
@@ -416,7 +410,6 @@ export default function MantenimientoAdminScreen() {
                 Podés suspender la jornada de hoy o programar la suspensión con anticipación si hay pronóstico de tormenta para los próximos días. Se cancelarán las reservas sin penalizar a los vecinos.
               </ThemedText>
 
-              {/* Selector de Fecha para la suspensión */}
               <ThemedText style={estilos.label}>Fecha a suspender:</ThemedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollChips}>
                 {diasVentana.map((d) => {
@@ -448,7 +441,6 @@ export default function MantenimientoAdminScreen() {
                 })}
               </ScrollView>
 
-              {/* Motivo informado */}
               <ThemedText style={estilos.label}>Motivo anunciado a los vecinos:</ThemedText>
               <TextInput
                 style={[
@@ -463,7 +455,7 @@ export default function MantenimientoAdminScreen() {
                 numberOfLines={2}
               />
 
-              {/* Resumen de canchas afectadas */}
+              {/* Resumen */}
               <View style={[estilos.cajaCanchasAfectadas, { backgroundColor: paleta.fondo, borderColor: paleta.borde }]}>
                 <ThemedText style={[estilos.tituloCanchasAfectadas, { color: paleta.primario }]}>
                   Canchas descubiertas que se suspenderán:

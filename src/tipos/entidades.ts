@@ -25,7 +25,7 @@ export interface Espacio {
 export interface Deporte {
   id: string;
   nombre: string;
-  icono: string; // Nombre de ícono en @react-native-vector-icons/ionicons
+  icono: string;
   color: string;
 }
 
@@ -53,16 +53,16 @@ export interface Reserva {
   cantidadPersonas: number;
   codigoQr: string;
   estado: EstadoReserva;
-  ingresoEn: string | null; // ISO 8601 con zona o null
-  creadaEn: string; // ISO 8601 con zona
-  cancelableHasta: string; // ISO 8601 con zona
+  ingresoEn: string | null;
+  creadaEn: string;
+  cancelableHasta: string;
 }
 
 export interface ReservaFija {
   id: string;
   espacioId: string;
   titular: string;
-  dia: 0 | 1 | 2 | 3 | 4 | 5 | 6; // 0 = Domingo ... 2 = Martes ... 6 = Sábado
+  dia: 0 | 1 | 2 | 3 | 4 | 5 | 6; // 0 = Domingo - 6 = Sábado
   inicio: string; // "HH:MM"
   fin: string; // "HH:MM"
   desde: string; // "AAAA-MM-DD"

@@ -40,7 +40,6 @@ export default function AgendaEncargadoScreen() {
   const [complejoSeleccionado, setComplejoSeleccionado] = useState<string | null>(null);
   const [soloReservas, setSoloReservas] = useState(false);
 
-  // Modal para confirmar ausencia
   const [turnoParaAusente, setTurnoParaAusente] = useState<ItemAgendaEncargado | null>(null);
 
   // Reporte fotográfico de la cancha
@@ -64,7 +63,7 @@ export default function AgendaEncargadoScreen() {
   const { mutateAsync: marcarAusenciaAsync, isPending: marcandoAusencia } = useMarcarAusencia();
   const { mutateAsync: ingresoManualAsync, isPending: marcandoIngreso } = useRegistrarIngresoManual();
 
-  // Tomar foto con la cámara y guardarla en el dispositivo
+  //guardar en el dispositivo
   const tomarFotoEstadoCancha = async (item: ItemAgendaEncargado) => {
     try {
       const permiso = await ImagePicker.requestCameraPermissionsAsync();
@@ -125,7 +124,7 @@ export default function AgendaEncargadoScreen() {
     }
   };
 
-  // Contadores para resumen rápido
+  // Contadores para resumen 
   const conteo = useMemo(() => {
     let confirmadas = 0;
     let presentes = 0;
@@ -140,7 +139,6 @@ export default function AgendaEncargadoScreen() {
 
   return (
     <ThemedView style={estilos.contenedor}>
-      {/* Selector de días */}
       <View style={[estilos.seccionDias, { backgroundColor: paleta.superficie, borderColor: paleta.borde }]}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollDias}>
           {diasVentana.map((d) => {
@@ -171,7 +169,6 @@ export default function AgendaEncargadoScreen() {
         </ScrollView>
       </View>
 
-      {/* Filtros por Complejo y Switch Solo Reservas */}
       <View style={[estilos.seccionFiltros, { backgroundColor: paleta.superficie }]}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={estilos.scrollFiltros}>
           <Pressable
@@ -243,7 +240,6 @@ export default function AgendaEncargadoScreen() {
         </Pressable>
       </View>
 
-      {/* Resumen rápido de portería */}
       <View style={[estilos.barraResumen, { backgroundColor: paleta.fondo }]}>
         <ThemedText style={estilos.resumenItem}>
           🟡 <ThemedText style={estilos.resumenNegrita}>{conteo.confirmadas}</ThemedText> pendientes
@@ -288,7 +284,6 @@ export default function AgendaEncargadoScreen() {
                   { backgroundColor: paleta.superficie, borderColor: paleta.borde },
                 ]}
               >
-                {/* Cabecera del turno */}
                 <View style={estilos.cabeceraTurno}>
                   <View style={estilos.filaHora}>
                     <Ionicons name="time-outline" size={16} color={paleta.primario} />
@@ -297,7 +292,6 @@ export default function AgendaEncargadoScreen() {
                     </ThemedText>
                   </View>
 
-                  {/* Badge de estado */}
                   {esCumplida ? (
                     <View style={[estilos.badgeEstado, { backgroundColor: '#E8F5E9' }]}>
                       <ThemedText style={[estilos.badgeTexto, { color: '#2E7D32' }]}>
@@ -337,7 +331,6 @@ export default function AgendaEncargadoScreen() {
                   )}
                 </View>
 
-                {/* Info de cancha y complejo */}
                 <View style={estilos.infoCancha}>
                   <ThemedText style={estilos.nombreCancha}>
                     {item.espacioNombre}
@@ -347,7 +340,6 @@ export default function AgendaEncargadoScreen() {
                   </ThemedText>
                 </View>
 
-                {/* Si tiene reserva con datos del jugador */}
                 {item.reserva && item.jugadorNombre ? (
                   <View style={[estilos.cajaJugador, { backgroundColor: paleta.fondo }]}>
                     <View style={estilos.filaJugador}>
@@ -372,7 +364,7 @@ export default function AgendaEncargadoScreen() {
                   </View>
                 ) : null}
 
-                {/* Si es reserva fija */}
+                {/*reserva fija */}
                 {esFijo && item.titularFijo ? (
                   <View style={[estilos.cajaJugador, { backgroundColor: '#EDE7F6' }]}>
                     <ThemedText style={{ color: '#512DA8', fontWeight: '700', fontSize: 13 }}>
@@ -381,7 +373,7 @@ export default function AgendaEncargadoScreen() {
                   </View>
                 ) : null}
 
-                {/* Foto adjunta del estado de la cancha si la tomó */}
+                {/* Foto estado cancha */}
                 {fotoAdjunta ? (
                   <View style={estilos.contenedorFotoAdjunta}>
                     <Image source={{ uri: fotoAdjunta }} style={estilos.fotoAdjunta} contentFit="cover" />
@@ -389,7 +381,6 @@ export default function AgendaEncargadoScreen() {
                   </View>
                 ) : null}
 
-                {/* Acciones para el encargado */}
                 <View style={estilos.filaAcciones}>
                   {esConfirmada ? (
                     <>
@@ -413,7 +404,6 @@ export default function AgendaEncargadoScreen() {
                     </>
                   ) : null}
 
-                  {/* Botón para foto de cancha */}
                   <Pressable
                     style={[estilos.botonFoto, { borderColor: paleta.borde }]}
                     onPress={() => void tomarFotoEstadoCancha(item)}
@@ -430,7 +420,7 @@ export default function AgendaEncargadoScreen() {
         />
       )}
 
-      {/* Modal para confirmar "No se presentó" */}
+      {/*No se presentó */}
       <Modal visible={Boolean(turnoParaAusente)} transparent animationType="fade">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaModal, { backgroundColor: paleta.superficie }]}>

@@ -79,7 +79,7 @@ export function obtenerFechaDiaSemanaEnVentana(
   return formatearFechaISOLocal(base);
 }
 
-// Arma los próximos 7 días con etiquetas en español
+// Arma los próximos 7 días 
 export function generarVentanaSieteDias(base: Date = new Date()): DiaCalendarioGrilla[] {
   const dias: DiaCalendarioGrilla[] = [];
 
@@ -195,7 +195,7 @@ export function calcularCancelableHasta(fechaISO: string, inicioHHMM: string): s
   return formatearDateTimeConZona(inicioTurno);
 }
 
-// Evalúa si cancela a tiempo o si es cancelación tardía
+// Evalúa si cancela a tiempo
 export function evaluarVentanaCancelacion(
   cancelableHastaISO: string,
   ahora: Date = new Date()
@@ -229,7 +229,7 @@ export function formatearDateTimeConZona(fecha: Date): string {
   );
 }
 
-// Valida que sea una hora en punto entre 08:00 y 24:00
+// Valida que sea entre 08 y 24
 export function esHoraEnPuntoValida(horaHHMM: string, permitirVeinticuatro = false): boolean {
   const match = /^(\d{2}):00$/.exec(horaHHMM.trim());
   if (!match) return false;
@@ -256,7 +256,7 @@ export function generarGrillaDiaria(
   const esHoy = fechaISO === hoyISO;
   const esPasado = fechaISO < hoyISO;
 
-  // Turnos de 1 hora desde 08:00 hasta 24:00 (16 franjas)
+  // Turnos de 1 hora desde 08:00 hasta 24:00
   const cantidadFranjas = HORA_CIERRE_GRILLA - HORA_APERTURA_GRILLA;
   const horas = Array.from({ length: cantidadFranjas }, (_, i) => i + HORA_APERTURA_GRILLA);
 
@@ -278,7 +278,7 @@ export function generarGrillaDiaria(
       motivoBloqueo = bloqueo.motivo;
     }
 
-    // 2. Reserva fija semanal
+    // 2. Reserva fija
     if (estado === 'libre') {
       const fija = reservasFijas.find((rf) => {
         if (!rf.activa || rf.espacioId !== espacioId || rf.dia !== diaSemana) {
@@ -332,7 +332,7 @@ export function generarGrillaDiaria(
   });
 }
 
-// Resumen de los turnos del día para mostrar avisos en pantalla
+// Resumen de los turnos del da
 export function resumirDisponibilidadDia(turnos: Turno[]): ResumenDisponibilidadDia {
   let libres = 0;
   let reservados = 0;

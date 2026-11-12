@@ -76,10 +76,9 @@ export async function listarEspacios(filtros?: FiltrosEspacio): Promise<Respuest
   try {
     await simularRedAsync(220);
     resultado = espaciosMemoria.filter((e) => e.activo);
-    // Sincronización transparente en segundo plano con SQLite
     void sincronizarEspaciosEnSqlite();
   } catch (error) {
-    // Si la red falló o estamos offline, intentamos leer la caché SQLite local
+    // Si estamos offline, leer la caché SQLite local
     const db = await obtenerBaseDatosAsync();
     if (db) {
       const cacheados = await obtenerEspaciosCache(db);

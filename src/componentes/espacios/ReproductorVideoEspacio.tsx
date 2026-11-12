@@ -41,7 +41,6 @@ export function ReproductorVideoEspacio({
           { backgroundColor: '#000000', borderColor: paleta.borde },
         ]}
       >
-        {/* Video en web */}
         {React.createElement('video', {
           src: videoUrl,
           controls: true,

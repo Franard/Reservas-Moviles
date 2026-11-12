@@ -31,7 +31,6 @@ export default function EscaneoQrScreen() {
   const [canchaFiltroId, setCanchaFiltroId] = useState<string>('');
   const [codigoManual, setCodigoManual] = useState('');
 
-  // Modales de resultado
   const [resultadoExitoso, setResultadoExitoso] = useState<ResultadoValidacionQr | null>(null);
   const [errorValidacion, setErrorValidacion] = useState<string | null>(null);
 
@@ -91,7 +90,7 @@ export default function EscaneoQrScreen() {
     setEscaneadoPausado(false);
   };
 
-  // Pantalla de bloqueo si no pasó la biometría
+  // Si no pasó la biometría
   if (!desbloqueado) {
     return (
       <ThemedView style={estilos.centrado}>
@@ -118,7 +117,7 @@ export default function EscaneoQrScreen() {
     );
   }
 
-  // Si no otorgó permisos de cámara
+  // Si no hay permisos de cámara
   if (!permiso?.granted && Platform.OS !== 'web') {
     return (
       <ThemedView style={estilos.centrado}>
@@ -209,13 +208,11 @@ export default function EscaneoQrScreen() {
             }
           />
 
-          {/* Máscara de enfoque central (Viewfinder 250x250) */}
           <View style={estilos.mascara}>
             <View style={estilos.mascaraArriba} />
             <View style={estilos.filaCentral}>
               <View style={estilos.mascaraLateral} />
               <View style={estilos.cuadroEnfoque}>
-                {/* Esquinas visuales */}
                 <View style={[estilos.esquina, estilos.esquinaTL]} />
                 <View style={[estilos.esquina, estilos.esquinaTR]} />
                 <View style={[estilos.esquina, estilos.esquinaBL]} />
@@ -234,7 +231,7 @@ export default function EscaneoQrScreen() {
             </View>
           </View>
 
-          {/* Botón flotante para linterna */}
+          {/* Bot´´on linterna */}
           <Pressable
             style={[
               estilos.botonLinterna,
@@ -250,7 +247,6 @@ export default function EscaneoQrScreen() {
           </Pressable>
         </View>
       ) : (
-        /* Modo Web / Simulación */
         <ThemedView style={estilos.simuladorWeb}>
           <Ionicons name="qr-code-outline" size={48} color={paleta.primario} />
           <ThemedText style={[estilos.tituloWeb, { color: paleta.primario }]}>
@@ -284,7 +280,6 @@ export default function EscaneoQrScreen() {
         </ThemedView>
       )}
 
-      {/* Modal de Éxito al validar el QR */}
       <Modal visible={Boolean(resultadoExitoso)} transparent animationType="fade">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaResultado, { backgroundColor: paleta.superficie }]}>
@@ -338,7 +333,6 @@ export default function EscaneoQrScreen() {
         </View>
       </Modal>
 
-      {/* Modal de Error al validar el QR */}
       <Modal visible={Boolean(errorValidacion)} transparent animationType="fade">
         <View style={estilos.telonModal}>
           <View style={[estilos.tarjetaResultado, { backgroundColor: paleta.superficie }]}>

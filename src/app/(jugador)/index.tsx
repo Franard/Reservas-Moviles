@@ -64,7 +64,6 @@ export default function CatalogoEspaciosScreen() {
 
   return (
     <ThemedView style={estilos.contenedor}>
-      {/* Barra de Búsqueda y Botón de Favoritos */}
       <View style={estilos.barraSuperior}>
         <View
           style={[
@@ -114,19 +113,16 @@ export default function CatalogoEspaciosScreen() {
         </Pressable>
       </View>
 
-      {/* Filtros de Deportes */}
       <FiltroDeportes
         deporteSeleccionadoId={deporteId}
         alSeleccionar={setDeporteId}
       />
 
-      {/* Filtros de Complejos */}
       <FiltroComplejos
         complejoSeleccionado={complejo}
         alSeleccionar={setComplejo}
       />
 
-      {/* Contador de resultados */}
       <View style={estilos.barraResultados}>
         <ThemedText style={[estilos.textoResultados, { color: paleta.textoSecundario }]}>
           {data?.length ?? 0} {data?.length === 1 ? 'espacio encontrado' : 'espacios encontrados'}
@@ -140,7 +136,6 @@ export default function CatalogoEspaciosScreen() {
         ) : null}
       </View>
 
-      {/* Lista de Espacios */}
       <FlatList
         data={data ?? []}
         keyExtractor={(item) => item.id}
